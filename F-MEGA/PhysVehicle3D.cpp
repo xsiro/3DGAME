@@ -40,16 +40,27 @@ void PhysVehicle3D::Render()
 
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
+	Cube aleron(info.aleron_size.x, info.aleron_size.y, info.aleron_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&aleron.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
+	offset = offset.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_aleron(info.aleron_offset.x, info.aleron_offset.y, info.aleron_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
 
+	aleron.transform.M[12] += offset_aleron.getX();
+	aleron.transform.M[13] += offset_aleron.getY();
+	aleron.transform.M[14] += offset_aleron.getZ();
+
+	chassis.color.Set(255, 0, 0);
+	aleron.color.Set(255, 128, 0);
 
 	chassis.Render();
+	aleron.Render();
 }
 
 // ----------------------------------------------------------------------------
