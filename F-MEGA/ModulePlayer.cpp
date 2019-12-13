@@ -18,15 +18,23 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	VehicleInfo car;
+	App->audio->PlayFx(App->audio->LoadFx("audio/music/theme.ogg"));
+	
 
+	VehicleInfo car;
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(1.2f, 0.6f, 3);
 	car.chassis_offset.Set(0, 1.8, 0);
+
 	car.aleron_size.Set(2, 0.1f, 0.1f);
 	car.aleron_offset.Set(0, 2.5f, -1.5f);
-	car.paloaleron_size.Set(0.5f, 1.0f, -0.5f);
-	car.paloaleron_offset.Set(0,2.0,-1.5f );
+
+	car.aleron_fix_size.Set(0.5f, 1.0f, -0.5f);
+	car.aleron_fix_offset.Set(0,2.0,-1.5f );
+
+	car.pipe_size.Set(0.1f, 0.05f, 0.8f);
+	car.pipe_offset.Set(0.1f, -0.8f, -3);
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -100,9 +108,10 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+	
+	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 20, 10);
-
 	
 	
 	return true;
@@ -119,55 +128,52 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = brake = 0.0f;
+	
+		turn = acceleration = brake = 0.0f;
 
-	if (App->camera->free_camera == false)
-	{
-		if (App->camera->rotate_camera == false)
+		float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 20 * vehicle->vehicle->getForwardVector().getX();
+		float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 20 * vehicle->vehicle->getForwardVector().getZ();
+		App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 12.0f * vehicle->vehicle->getForwardVector().getX();
+		App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 5.5f * vehicle->vehicle->getUpAxis();
+		App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 7.5f * vehicle->vehicle->getForwardVector().getZ();
+
+		App->camera->LookAt(vec3(x, 0, z));
+
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
-			float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 20 * vehicle->vehicle->getForwardVector().getX();
-			float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 20 * vehicle->vehicle->getForwardVector().getZ();
-			App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 10.0f * vehicle->vehicle->getForwardVector().getX();
-			App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 3.5f * vehicle->vehicle->getUpAxis();
-			App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 7.5f * vehicle->vehicle->getForwardVector().getZ();
-			
-			App->camera->LookAt(vec3(x, 1, z));
+			acceleration = MAX_ACCELERATION;
 		}
-	}
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		acceleration = MAX_ACCELERATION;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			if (turn < TURN_DEGREES)
+				turn += TURN_DEGREES;
+		}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			if (turn > -TURN_DEGREES)
+				turn -= TURN_DEGREES;
+		}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			acceleration = -GO_BACK;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		acceleration = -GO_BACK;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		acceleration = NITRO;
-	}
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
-	vehicle->Brake(brake);
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+		{
+			brake = BRAKE_POWER;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		{
+			acceleration = NITRO;
+		}
+	
+		vehicle->ApplyEngineForce(acceleration);
+		vehicle->Turn(turn);
+		vehicle->Brake(brake);
+	
 
 	
 

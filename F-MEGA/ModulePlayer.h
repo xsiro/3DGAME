@@ -11,6 +11,7 @@ struct PhysVehicle3D;
 #define BRAKE_POWER 500.0f
 #define NITRO 1500.0f;
 
+
 class ModulePlayer : public Module
 {
 public:
@@ -22,10 +23,12 @@ public:
 	bool CleanUp();
 
 public:
-
+	
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
 	float nitro;
+	bool Win = false;
+	
 };

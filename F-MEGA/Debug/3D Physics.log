@@ -1,5 +1,14 @@
-﻿  ModuleCamera3D.cpp
+﻿  Application.cpp
+  Main.cpp
+  ModuleAudio.cpp
+  ModuleCamera3D.cpp
+  ModuleInput.cpp
+  ModulePhysics3D.cpp
   ModulePlayer.cpp
-c:\users\druiz\documents\github\3dgame\f-mega\moduleplayer.cpp(25): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+c:\users\danielrc8\documents\github\3dgame\f-mega\moduleplayer.cpp(27): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+  ModuleRenderer3D.cpp
+  ModuleSceneIntro.cpp
+  ModuleWindow.cpp
+  PhysVehicle3D.cpp
   Generando código...
-  3D Physics.vcxproj -> C:\Users\druiz\Documents\GitHub\3DGAME\F-MEGA\Debug\3D Physics - class5.exe
+  3D Physics.vcxproj -> C:\Users\danielrc8\Documents\GitHub\3DGAME\F-MEGA\Debug\3D Physics - class5.exe

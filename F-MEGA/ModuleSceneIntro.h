@@ -18,8 +18,14 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
-
+	/*Cube ModuleSceneIntro::Walls(float posX, float posY, float posZ, int race);
+	bool ModuleSceneIntro::CreateRace(float list[], uint size, uint numRace);*/
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+	Cube* Race[600];
+	uint Race_index = 0;
+	uint NumRace;
+	uint size;
+	
 
 public:
 	/*

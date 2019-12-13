@@ -42,17 +42,21 @@ void PhysVehicle3D::Render()
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	Cube aleron(info.aleron_size.x, info.aleron_size.y, info.aleron_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&aleron.transform);
-	Cube paloaleron(info.paloaleron_size.x, info.paloaleron_size.y, info.paloaleron_size.z);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&paloaleron.transform);
-
+	Cube aleron_fix(info.aleron_fix_size.x, info.aleron_fix_size.y, info.aleron_fix_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&aleron_fix.transform);
+	Cube pipe(info.pipe_size.x, info.pipe_size.y,info.pipe_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&pipe.transform);
+	
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
 	btVector3 offset_aleron(info.aleron_offset.x, info.aleron_offset.y, info.aleron_offset.z);
 	offset_aleron = offset_aleron.rotate(q.getAxis(), q.getAngle());
-	btVector3 offset_paloaleron(info.paloaleron_offset.x, info.paloaleron_offset.y, info.paloaleron_offset.z);
-	offset_paloaleron = offset_paloaleron.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_aleron_fix(info.aleron_fix_offset.x, info.aleron_fix_offset.y, info.aleron_fix_offset.z);
+	offset_aleron_fix = offset_aleron_fix.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_pipe(info.pipe_offset.x, info.pipe_offset.y, info.pipe_offset.z);
+	offset_pipe = offset_pipe.rotate(q.getAxis(), q.getAngle());
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
@@ -62,18 +66,24 @@ void PhysVehicle3D::Render()
 	aleron.transform.M[13] += offset_aleron.getY();
 	aleron.transform.M[14] += offset_aleron.getZ();
 
-	paloaleron.transform.M[12] += offset_paloaleron.getX();
-	paloaleron.transform.M[13] += offset_paloaleron.getY();
-	paloaleron.transform.M[14] += offset_paloaleron.getZ();
+	aleron_fix.transform.M[12] += offset_aleron_fix.getX();
+	aleron_fix.transform.M[13] += offset_aleron_fix.getY();
+	aleron_fix.transform.M[14] += offset_aleron_fix.getZ();
+
+	pipe.transform.M[12] += offset_pipe.getX();
+	pipe.transform.M[13] += offset_pipe.getY();
+	pipe.transform.M[14] += offset_pipe.getZ();
 
 	chassis.color = Red;
 	aleron.color.Set(255, 128, 0);
-	paloaleron.color = Red;
+	aleron_fix.color = Red;
+	pipe.color = Green;
 
 
 	chassis.Render();
 	aleron.Render();
-	paloaleron.Render();
+	aleron_fix.Render();
+	pipe.Render();
 }
 
 // ----------------------------------------------------------------------------
