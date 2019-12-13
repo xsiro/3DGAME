@@ -6,10 +6,10 @@
 struct PhysVehicle3D;
 
 #define MAX_ACCELERATION 750.0f
-#define GO_BACK 500.0f
+#define GO_BACK 1500.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 500.0f
-#define NITRO 1500.0f;
+#define NITRO 2000.0f;
 
 
 class ModulePlayer : public Module
@@ -29,6 +29,4 @@ public:
 	float acceleration;
 	float brake;
 	float nitro;
-	bool Win = false;
-	
 };

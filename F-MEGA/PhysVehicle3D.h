@@ -32,6 +32,8 @@ struct VehicleInfo
 	vec3 aleron_fix_offset;
 	vec3 pipe_size;
 	vec3 pipe_offset;
+	vec3 frontal_size;
+	vec3 frontal_offset;
 
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car

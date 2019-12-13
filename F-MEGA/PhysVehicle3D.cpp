@@ -25,7 +25,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color.Set(0.3f,0.3f,0.3f);
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -46,6 +46,8 @@ void PhysVehicle3D::Render()
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&aleron_fix.transform);
 	Cube pipe(info.pipe_size.x, info.pipe_size.y,info.pipe_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&pipe.transform);
+	Cube frontal(info.frontal_size.x, info.frontal_size.y, info.frontal_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&frontal.transform);
 	
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 
@@ -57,6 +59,8 @@ void PhysVehicle3D::Render()
 	offset_aleron_fix = offset_aleron_fix.rotate(q.getAxis(), q.getAngle());
 	btVector3 offset_pipe(info.pipe_offset.x, info.pipe_offset.y, info.pipe_offset.z);
 	offset_pipe = offset_pipe.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_frontal(info.frontal_offset.x, info.frontal_offset.y, info.frontal_offset.z);
+	offset_frontal = offset_frontal.rotate(q.getAxis(), q.getAngle());
 
 	chassis.transform.M[12] += offset.getX();
 	chassis.transform.M[13] += offset.getY();
@@ -74,16 +78,22 @@ void PhysVehicle3D::Render()
 	pipe.transform.M[13] += offset_pipe.getY();
 	pipe.transform.M[14] += offset_pipe.getZ();
 
-	chassis.color = Red;
-	aleron.color.Set(255, 128, 0);
-	aleron_fix.color = Red;
-	pipe.color = Green;
+	frontal.transform.M[12] += offset_frontal.getX();
+	frontal.transform.M[13] += offset_frontal.getY();
+	frontal.transform.M[14] += offset_frontal.getZ();
+
+	chassis.color.Set(1.0f, 0.3f, 0.0f);
+	aleron.color.Set(1.0f, 0.05f, 0.0f);
+	aleron_fix.color.Set(1.0f, 0.3f, 0.0f);
+	pipe.color.Set(0.5f,0.5f,0.5f);
+	frontal.color.Set(1.0f, 0.05f, 0.0f);
 
 
 	chassis.Render();
 	aleron.Render();
 	aleron_fix.Render();
 	pipe.Render();
+	frontal.Render();
 }
 
 // ----------------------------------------------------------------------------
