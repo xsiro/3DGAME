@@ -29,4 +29,6 @@ public:
 	float acceleration;
 	float brake;
 	float nitro;
+	bool camera_back=false;
+	bool camera_front = false;
 };

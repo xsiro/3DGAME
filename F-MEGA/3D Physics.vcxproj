@@ -94,7 +94,6 @@
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="PhysVehicle3D.h" />
     <ClInclude Include="Primitive.h" />
-    <ClInclude Include="Race.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>

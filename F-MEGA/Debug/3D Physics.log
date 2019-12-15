@@ -1,5 +1,2 @@
-﻿  ModulePlayer.cpp
-c:\users\danielrc8\documents\github\3dgame\f-mega\moduleplayer.cpp(27): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-c:\users\danielrc8\documents\github\3dgame\f-mega\moduleplayer.cpp(33): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-c:\users\danielrc8\documents\github\3dgame\f-mega\moduleplayer.cpp(39): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-  3D Physics.vcxproj -> C:\Users\danielrc8\Documents\GitHub\3DGAME\F-MEGA\Debug\3D Physics - class5.exe
+﻿  ModuleSceneIntro.cpp
+  3D Physics.vcxproj -> C:\Users\druiz\Documents\GitHub\3DGAME\F-MEGA\Debug\3D Physics - class5.exe

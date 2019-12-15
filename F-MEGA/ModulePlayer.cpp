@@ -18,7 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	App->audio->PlayFx(App->audio->LoadFx("audio/music/theme.ogg"));
+	
 	
 
 	VehicleInfo car;
@@ -131,14 +131,42 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	
-	turn = acceleration = brake = 0.0f;
-
 	float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 20 * vehicle->vehicle->getForwardVector().getX();
 	float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 20 * vehicle->vehicle->getForwardVector().getZ();
 	App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 12.0f * vehicle->vehicle->getForwardVector().getX();
 	App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 5.5f * vehicle->vehicle->getUpAxis();
 	App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 7.5f * vehicle->vehicle->getForwardVector().getZ();
+	camera_back = true;
+	turn = acceleration = brake = 0.0f;
+
+	/*if (camera_back == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_REPEAT)
+		{
+			float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 20 * vehicle->vehicle->getForwardVector().getX();
+			float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 20 * vehicle->vehicle->getForwardVector().getZ();
+			App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 12.0f * vehicle->vehicle->getForwardVector().getX();
+			App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 5.5f * vehicle->vehicle->getUpAxis();
+			App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 7.5f * vehicle->vehicle->getForwardVector().getZ();
+			camera_back = true;
+			camera_front = false;
+			App->camera->LookAt(vec3(x, 0, z));
+		}
+	}*/
+	/*if (camera_front == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT)
+		{
+			float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 20 * vehicle->vehicle->getForwardVector().getX();
+			float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 20 * vehicle->vehicle->getForwardVector().getZ();
+			App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 12.0f * vehicle->vehicle->getForwardVector().getX();
+			App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 3.0f * vehicle->vehicle->getUpAxis();
+			App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 7.5f * vehicle->vehicle->getForwardVector().getZ();
+			camera_front = true;
+			camera_back = false;
+			App->camera->LookAt(vec3(x, 0, z));
+		}
+	}*/
 
 	App->camera->LookAt(vec3(x, 0, z));
 
